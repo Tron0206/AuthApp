@@ -1,16 +1,20 @@
 PODS:
+  - CombineCocoa (0.4.1)
   - EasyPeasy (1.10.0)
 
 DEPENDENCIES:
+  - CombineCocoa
   - EasyPeasy
 
 SPEC REPOS:
   trunk:
+    - CombineCocoa
     - EasyPeasy
 
 SPEC CHECKSUMS:
+  CombineCocoa: e5210dbfb480ff251078929459ac17e750e7af1d
   EasyPeasy: b9b1bae024d21a7dfa9bad26d6826d88348cc6f1
 
-PODFILE CHECKSUM: 0e7b4f7463e67db13536be2dc02ccfaceea3823a
+PODFILE CHECKSUM: 6583c16d21f817f6a41257134e1fbe38ce22d815
 
 COCOAPODS: 1.15.2

@@ -6,6 +6,7 @@ target 'AuthApp' do
   use_frameworks!
 
   pod "EasyPeasy"
+  pod 'CombineCocoa'
 
 
 end

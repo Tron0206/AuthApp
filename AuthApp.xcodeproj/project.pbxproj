@@ -10,10 +10,13 @@
 		34C3CC9D192F5B8F3522E1DB /* Pods_AuthApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61CAA4A718EA784AD3C1A5E2 /* Pods_AuthApp.framework */; };
 		8F0301D82BFE87CE00945DDA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0301D72BFE87CE00945DDA /* AppDelegate.swift */; };
 		8F0301DA2BFE87CE00945DDA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0301D92BFE87CE00945DDA /* SceneDelegate.swift */; };
-		8F0301DC2BFE87CE00945DDA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0301DB2BFE87CE00945DDA /* ViewController.swift */; };
 		8F0301E12BFE87CF00945DDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F0301E02BFE87CF00945DDA /* Assets.xcassets */; };
 		8F0301E42BFE87CF00945DDA /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 8F0301E32BFE87CF00945DDA /* Base */; };
 		8FA803FC2C00A621004A4B3B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA803FB2C00A621004A4B3B /* LoginViewController.swift */; };
+		8FA804002C00A9BA004A4B3B /* UIColor+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA803FF2C00A9BA004A4B3B /* UIColor+extension.swift */; };
+		8FE3F56D2C00CC3200272FE9 /* UITextField+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F56C2C00CC3200272FE9 /* UITextField+extension.swift */; };
+		8FE3F56F2C00D0FE00272FE9 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F56E2C00D0FE00272FE9 /* LoginViewModel.swift */; };
+		8FE3F5712C00D13600272FE9 /* LoginModuleConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F5702C00D13600272FE9 /* LoginModuleConfigurator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,11 +26,14 @@
 		8F0301D42BFE87CE00945DDA /* AuthApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AuthApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F0301D72BFE87CE00945DDA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8F0301D92BFE87CE00945DDA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		8F0301DB2BFE87CE00945DDA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8F0301E02BFE87CF00945DDA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8F0301E32BFE87CF00945DDA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F0301E52BFE87CF00945DDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8FA803FB2C00A621004A4B3B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		8FA803FF2C00A9BA004A4B3B /* UIColor+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extension.swift"; sourceTree = "<group>"; };
+		8FE3F56C2C00CC3200272FE9 /* UITextField+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+extension.swift"; sourceTree = "<group>"; };
+		8FE3F56E2C00D0FE00272FE9 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		8FE3F5702C00D13600272FE9 /* LoginModuleConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModuleConfigurator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,10 +86,10 @@
 		8F0301D62BFE87CE00945DDA /* AuthApp */ = {
 			isa = PBXGroup;
 			children = (
+				8FE3F5722C00D18000272FE9 /* Helpers */,
+				8FA803FE2C00A9AB004A4B3B /* Extensions */,
+				8FA803FD2C00A77F004A4B3B /* AppRoot */,
 				8FA803F72C00A5D8004A4B3B /* Modules */,
-				8F0301D72BFE87CE00945DDA /* AppDelegate.swift */,
-				8F0301D92BFE87CE00945DDA /* SceneDelegate.swift */,
-				8F0301DB2BFE87CE00945DDA /* ViewController.swift */,
 				8F0301E02BFE87CF00945DDA /* Assets.xcassets */,
 				8F0301E22BFE87CF00945DDA /* LaunchScreen.storyboard */,
 				8F0301E52BFE87CF00945DDA /* Info.plist */,
@@ -112,6 +118,8 @@
 			isa = PBXGroup;
 			children = (
 				8FA803FB2C00A621004A4B3B /* LoginViewController.swift */,
+				8FE3F56E2C00D0FE00272FE9 /* LoginViewModel.swift */,
+				8FE3F5702C00D13600272FE9 /* LoginModuleConfigurator.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -121,6 +129,31 @@
 			children = (
 			);
 			path = Registration;
+			sourceTree = "<group>";
+		};
+		8FA803FD2C00A77F004A4B3B /* AppRoot */ = {
+			isa = PBXGroup;
+			children = (
+				8F0301D72BFE87CE00945DDA /* AppDelegate.swift */,
+				8F0301D92BFE87CE00945DDA /* SceneDelegate.swift */,
+			);
+			path = AppRoot;
+			sourceTree = "<group>";
+		};
+		8FA803FE2C00A9AB004A4B3B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8FA803FF2C00A9BA004A4B3B /* UIColor+extension.swift */,
+				8FE3F56C2C00CC3200272FE9 /* UITextField+extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		8FE3F5722C00D18000272FE9 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,10 +270,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FE3F5712C00D13600272FE9 /* LoginModuleConfigurator.swift in Sources */,
 				8FA803FC2C00A621004A4B3B /* LoginViewController.swift in Sources */,
-				8F0301DC2BFE87CE00945DDA /* ViewController.swift in Sources */,
 				8F0301D82BFE87CE00945DDA /* AppDelegate.swift in Sources */,
+				8FE3F56F2C00D0FE00272FE9 /* LoginViewModel.swift in Sources */,
 				8F0301DA2BFE87CE00945DDA /* SceneDelegate.swift in Sources */,
+				8FA804002C00A9BA004A4B3B /* UIColor+extension.swift in Sources */,
+				8FE3F56D2C00CC3200272FE9 /* UITextField+extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
