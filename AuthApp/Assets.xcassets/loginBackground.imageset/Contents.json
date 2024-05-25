@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "1x pink.png",
+      "filename" : "Create account.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "2x pink.png",
+      "filename" : "Create account@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "3x pink.png",
+      "filename" : "Create account@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

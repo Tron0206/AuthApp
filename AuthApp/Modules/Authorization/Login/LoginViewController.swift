@@ -29,7 +29,7 @@ final class LoginViewController: UIViewController  {
     
     private lazy var backgroundImageView: UIImageView = {
         let iv = UIImageView()
-//        iv.image = Image.background
+        iv.image = Image.background
         iv.backgroundColor = .black
         return iv
     }()
