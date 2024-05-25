@@ -12,6 +12,9 @@
 		8F0301DA2BFE87CE00945DDA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0301D92BFE87CE00945DDA /* SceneDelegate.swift */; };
 		8F0301E12BFE87CF00945DDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F0301E02BFE87CF00945DDA /* Assets.xcassets */; };
 		8F0301E42BFE87CF00945DDA /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 8F0301E32BFE87CF00945DDA /* Base */; };
+		8F9CC0592C011D10006DEBB9 /* AuthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9CC0582C011D10006DEBB9 /* AuthTextField.swift */; };
+		8F9CC05B2C0129F0006DEBB9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8F9CC05A2C0129F0006DEBB9 /* GoogleService-Info.plist */; };
+		8F9CC0602C01477E006DEBB9 /* AlertPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9CC05F2C01477E006DEBB9 /* AlertPresentable.swift */; };
 		8FA803FC2C00A621004A4B3B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA803FB2C00A621004A4B3B /* LoginViewController.swift */; };
 		8FA804002C00A9BA004A4B3B /* UIColor+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA803FF2C00A9BA004A4B3B /* UIColor+extension.swift */; };
 		8FE3F56D2C00CC3200272FE9 /* UITextField+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE3F56C2C00CC3200272FE9 /* UITextField+extension.swift */; };
@@ -29,6 +32,9 @@
 		8F0301E02BFE87CF00945DDA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8F0301E32BFE87CF00945DDA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F0301E52BFE87CF00945DDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8F9CC0582C011D10006DEBB9 /* AuthTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTextField.swift; sourceTree = "<group>"; };
+		8F9CC05A2C0129F0006DEBB9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8F9CC05F2C01477E006DEBB9 /* AlertPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresentable.swift; sourceTree = "<group>"; };
 		8FA803FB2C00A621004A4B3B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8FA803FF2C00A9BA004A4B3B /* UIColor+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+extension.swift"; sourceTree = "<group>"; };
 		8FE3F56C2C00CC3200272FE9 /* UITextField+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+extension.swift"; sourceTree = "<group>"; };
@@ -86,6 +92,8 @@
 		8F0301D62BFE87CE00945DDA /* AuthApp */ = {
 			isa = PBXGroup;
 			children = (
+				8F9CC05C2C01348F006DEBB9 /* Services */,
+				8F9CC0572C011CF3006DEBB9 /* CustomViews */,
 				8FE3F5722C00D18000272FE9 /* Helpers */,
 				8FA803FE2C00A9AB004A4B3B /* Extensions */,
 				8FA803FD2C00A77F004A4B3B /* AppRoot */,
@@ -93,8 +101,24 @@
 				8F0301E02BFE87CF00945DDA /* Assets.xcassets */,
 				8F0301E22BFE87CF00945DDA /* LaunchScreen.storyboard */,
 				8F0301E52BFE87CF00945DDA /* Info.plist */,
+				8F9CC05A2C0129F0006DEBB9 /* GoogleService-Info.plist */,
 			);
 			path = AuthApp;
+			sourceTree = "<group>";
+		};
+		8F9CC0572C011CF3006DEBB9 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				8F9CC0582C011D10006DEBB9 /* AuthTextField.swift */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
+		8F9CC05C2C01348F006DEBB9 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		8FA803F62C00A5C6004A4B3B /* Authorization */ = {
@@ -152,6 +176,7 @@
 		8FE3F5722C00D18000272FE9 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				8F9CC05F2C01477E006DEBB9 /* AlertPresentable.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -218,6 +243,7 @@
 			files = (
 				8F0301E12BFE87CF00945DDA /* Assets.xcassets in Resources */,
 				8F0301E42BFE87CF00945DDA /* Base in Resources */,
+				8F9CC05B2C0129F0006DEBB9 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,6 +297,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8FE3F5712C00D13600272FE9 /* LoginModuleConfigurator.swift in Sources */,
+				8F9CC0602C01477E006DEBB9 /* AlertPresentable.swift in Sources */,
+				8F9CC0592C011D10006DEBB9 /* AuthTextField.swift in Sources */,
 				8FA803FC2C00A621004A4B3B /* LoginViewController.swift in Sources */,
 				8F0301D82BFE87CE00945DDA /* AppDelegate.swift in Sources */,
 				8FE3F56F2C00D0FE00272FE9 /* LoginViewModel.swift in Sources */,
@@ -434,7 +462,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.AuthApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.AuthApp0206;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -463,7 +491,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.AuthApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.AuthApp0206;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

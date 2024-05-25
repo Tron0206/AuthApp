@@ -20,9 +20,17 @@ final class LoginViewController: UIViewController  {
     
     private var cancellables: Set<AnyCancellable> = []
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.color = .white
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
+    
     private lazy var backgroundImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = Image.background
+//        iv.image = Image.background
+        iv.backgroundColor = .black
         return iv
     }()
     
@@ -46,6 +54,7 @@ final class LoginViewController: UIViewController  {
         )
         tf.keyboardType = .emailAddress
         tf.textColor = .white
+        tf.autocapitalizationType = .none
         return tf
     }()
     
@@ -53,6 +62,14 @@ final class LoginViewController: UIViewController  {
         let view = UIView()
         view.backgroundColor = .white
         return view
+    }()
+    
+    private lazy var loginErrorLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.textColor = .red
+        lbl.font = .systemFont(ofSize: 12)
+        lbl.numberOfLines = 0
+        return lbl
     }()
     
     private lazy var passwordTextField: UITextField = {
@@ -75,6 +92,14 @@ final class LoginViewController: UIViewController  {
         let view = UIView()
         view.backgroundColor = .white
         return view
+    }()
+    
+    private lazy var passwordErrorLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.textColor = .red
+        lbl.font = .systemFont(ofSize: 12)
+        lbl.numberOfLines = 0
+        return lbl
     }()
     
     private lazy var securitePasswordButton: UIButton = {
@@ -108,7 +133,8 @@ final class LoginViewController: UIViewController  {
         setupViews()
         setupConstraints()
         setupGestureRecognizer()
-        setupBindings()
+        setupBindingsUI()
+        setupBindingsViewModel()
     }
 }
 
@@ -118,9 +144,12 @@ private extension LoginViewController {
         view.addSubview(titleLabel)
         view.addSubview(loginTextField)
         view.addSubview(loginUnderlineView)
+        view.addSubview(loginErrorLabel)
         view.addSubview(passwordTextField)
         view.addSubview(passwordUnderlineView)
+        view.addSubview(passwordErrorLabel)
         view.addSubview(loginButton)
+        view.addSubview(activityIndicator)
     }
     
     func setupConstraints() {
@@ -129,7 +158,7 @@ private extension LoginViewController {
         )
         
         titleLabel.easy.layout(
-            Top(200),
+            Top(150),
             Leading(16),
             Trailing(16)
         )
@@ -148,6 +177,12 @@ private extension LoginViewController {
             Height(1)
         )
         
+        loginErrorLabel.easy.layout(
+            Top(4).to(loginUnderlineView, .bottom),
+            Leading(16),
+            Trailing(16)
+        )
+        
         passwordTextField.easy.layout(
             Top(48).to(loginTextField, .bottom),
             Leading(16),
@@ -162,30 +197,58 @@ private extension LoginViewController {
             Height(1)
         )
         
+        passwordErrorLabel.easy.layout(
+            Top(4).to(passwordUnderlineView, .bottom),
+            Leading(16),
+            Trailing(16)
+        )
+        
         loginButton.easy.layout(
             Top(60).to(passwordUnderlineView, .bottom),
             Leading(25),
             Trailing(25),
             Height(42)
         )
+        
+        activityIndicator.easy.layout( 
+            Center()
+        )
     }
     
-    func setupBindings() {
-        securitePasswordButton.tapPublisher
-            .sink { [weak self] in
-                guard let self else { return }
-                securitePasswordButton.isSelected.toggle()
-                passwordTextField.isSecureTextEntry.toggle()
-            }
-            .store(in: &cancellables)
-        
+    func setupBindingsUI() {
         loginButton.tapPublisher
             .sink { [weak self] in
                 guard let self else { return }
-                print("login button did touch")
+                self.view.endEditing(true)
+                let login = self.loginTextField.text ?? ""
+                let password = self.passwordTextField.text ?? ""
+                
+                guard !login.isEmpty && !password.isEmpty else {
+                    self.showAlert(title: "Ошибка", description: "Заполните все поля")
+                    return
+                }
+                
+                self.activityIndicator.startAnimating()
+                
+                self.viewModel.login(with: login, password: password)
+                    .sink { error in
+                        self.activityIndicator.stopAnimating()
+                        switch error {
+                        case .finished:
+                            break
+                        case .failure(let error):
+                            self.showAlert(title: "Ошибка", description: error.errorDescription)
+                        }
+                    } receiveValue: { _ in
+                        self.activityIndicator.stopAnimating()
+                        self.showAlert(title: "Успешно", description: "")
+                    }
+                    .store(in: &cancellables)
+
             }
             .store(in: &cancellables)
         
+        //MARK: - Login
         loginTextField.returnPublisher
             .sink { [weak self] in
                 guard let self else { return }
@@ -197,10 +260,20 @@ private extension LoginViewController {
             .sink { [weak self] in
                 guard let self else { return }
                 guard let text = self.loginTextField.text else { return }
+                guard !text.isEmpty else { return }
                 self.viewModel.login = text
             }
             .store(in: &cancellables)
         
+        loginTextField.didBeginEditingPublisher
+            .sink { [weak self] in
+                guard let self else { return }
+                self.loginErrorLabel.text = nil
+                self.loginUnderlineView.backgroundColor = .white
+            }
+            .store(in: &cancellables)
+        
+        //MARK: - Password
         passwordTextField.returnPublisher
             .sink { [weak self] in
                 guard let self else { return }
@@ -209,6 +282,32 @@ private extension LoginViewController {
             .store(in: &cancellables)
         
         
+        
+        securitePasswordButton.tapPublisher
+            .sink { [weak self] in
+                guard let self else { return }
+                securitePasswordButton.isSelected.toggle()
+                passwordTextField.isSecureTextEntry.toggle()
+            }
+            .store(in: &cancellables)
+        
+        
+    }
+    
+    func setupBindingsViewModel() {
+        viewModel.loginValid
+            .sink { [weak self] result in
+                guard let self else { return }
+                guard result != .valid else {
+                    self.loginUnderlineView.backgroundColor = .white
+                    self.loginErrorLabel.text = nil
+                    return
+                }
+                
+                self.loginUnderlineView.backgroundColor = .red
+                self.loginErrorLabel.text = result.errorMessage
+            }
+            .store(in: &cancellables)
     }
     
     func setupGestureRecognizer() {
