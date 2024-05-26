@@ -10,12 +10,18 @@ import Combine
 import FirebaseAuth
 
 final class LoginViewModel {
+    
+    var router: LoginRouter?
+    
+    private let validationService = ValidationService()
+    
     private var cancellables: Set<AnyCancellable> = []
     
     @Published var login: String = ""
     @Published var password: String = ""
     
     var loginValid = PassthroughSubject<EmailValidationError, Never>()
+    var passwordValid = PassthroughSubject<PasswordValidationError, Never>()
     
     init() {
         setupBindings()
@@ -37,6 +43,10 @@ final class LoginViewModel {
         }
         .eraseToAnyPublisher()
     }
+    
+    func openRegistration() {
+        router?.openRegistrationModule()
+    }
 }
 
 private extension LoginViewModel {
@@ -48,48 +58,25 @@ private extension LoginViewModel {
                 self.loginValid.send(result)
             }
             .store(in: &cancellables)
+        
+        $password
+            .sink { [weak self] value in
+                guard let self else { return }
+                let result = self.validatePassword(value)
+                self.passwordValid.send(result)
+            }
+            .store(in: &cancellables)
     }
     
     func validateEmail(_ value: String) -> EmailValidationError {
-        let atSymbolPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", "@")
-        if !atSymbolPredicate.evaluate(with: value) {
-            return .missingAtSymbol
-        }
-
-        let domainPartPredicate = NSPredicate(format: "SELF MATCHES %@", ".*@.+\\..+")
-        if !domainPartPredicate.evaluate(with: value) {
-            return .missingDomain
-        }
-
-        let emailFormatPredicate = NSPredicate(format: "SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}")
-        if !emailFormatPredicate.evaluate(with: value) {
-            return .invalidFormat
-        }
-
-        return .valid
+        validationService.validateEmail(value: value)
     }
-}
-
-enum EmailValidationError {
-    case missingAtSymbol
-    case missingDomain
-    case invalidFormat
-    case valid
     
-    var errorMessage: String {
-        switch self {
-        case .missingAtSymbol:
-            return "Адрес электронной почты должен содержать символ '@'."
-        case .missingDomain:
-            return "Адрес электронной почты должен содержать доменное имя (например, example@domain.com)."
-        case .invalidFormat:
-            return "Некорректный формат адреса электронной почты. Проверьте правильность ввода."
-        case .valid:
-            return ""
-        }
+    func validatePassword(_ value: String) ->  PasswordValidationError {
+        validationService.validatePassword(value: value)
     }
+    
 }
-
 struct LoginError: Error {
     private let error: AuthErrorCode.Code
     
@@ -109,6 +96,29 @@ struct LoginError: Error {
             return "Введён неверный пароль. Пожалуйста, проверьте пароль и попробуйте снова."
         default:
             return "Неизвестная ошибка"
+        }
+    }
+}
+
+struct RegistrationError: Error {
+    private let error: AuthErrorCode.Code
+
+    init(error: AuthErrorCode.Code) {
+        self.error = error
+    }
+
+    var errorDescription: String {
+        switch error {
+        case .invalidEmail:
+            return "Введённый адрес электронной почты имеет неверный формат. Пожалуйста, проверьте и попробуйте снова."
+        case .emailAlreadyInUse:
+            return "Указанный адрес электронной почты уже используется. Проверьте возможные способы входа или используйте другой адрес."
+        case .operationNotAllowed:
+            return "Извините, регистрация с использованием электронной почты и пароля в данный момент недоступна. Пожалуйста, попробуйте другой способ аутентификации или свяжитесь с поддержкой."
+        case .weakPassword:
+            return "Введённый пароль слишком слабый. Пожалуйста, используйте более сложный пароль."
+        default:
+            return "Произошла неизвестная ошибка. Пожалуйста, попробуйте снова позже."
         }
     }
 }

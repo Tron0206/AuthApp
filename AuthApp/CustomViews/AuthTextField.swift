@@ -10,6 +10,13 @@ import EasyPeasy
 
 final class AuthTextField: UIView {
     
+    enum State {
+        case failure
+        case success
+    }
+    
+    private(set) var state: State = .success
+    
     var attributedPlaceholder: NSAttributedString = NSAttributedString() {
         didSet {
             textField.attributedPlaceholder = attributedPlaceholder
@@ -40,9 +47,42 @@ final class AuthTextField: UIView {
         }
     }
     
+    var borderStyle: UITextField.BorderStyle = .none {
+        didSet {
+            textField.borderStyle = borderStyle
+        }
+    }
+    
+    var autocapitalizationType: UITextAutocapitalizationType = .none {
+        didSet {
+            textField.autocapitalizationType = autocapitalizationType
+        }
+    }
+    
+    var isSecureTextEntry: Bool = false {
+        didSet {
+            textField.isSecureTextEntry = isSecureTextEntry
+        }
+    }
+    
+    var rightView: UIView? = nil {
+        didSet {
+            textField.rightView = rightView
+            textField.rightViewMode = .always
+        }
+    }
+    
+    var tf: UITextField {
+        return self.textField
+    }
+    
+    var text: String {
+        return self.textField.text ?? ""
+    }
+    
     private lazy var textField: UITextField = {
         let tf = UITextField()
-        tf.borderStyle = .none
+        tf.autocapitalizationType = .none
         return tf
     }()
     
@@ -57,7 +97,6 @@ final class AuthTextField: UIView {
         lbl.textColor = .red
         lbl.font = .systemFont(ofSize: 12)
         lbl.numberOfLines = 0
-        lbl.text = "Ошибка Ошибка Ошибка Ошибка"
         return lbl
     }()
     
@@ -69,6 +108,22 @@ final class AuthTextField: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setErrorState(message: String) {
+        state = .failure
+        lineView.backgroundColor = .red
+        errorLabel.text = message
+    }
+    
+    func setSuccessState() {
+        state = .success
+        lineView.backgroundColor = .white
+        errorLabel.text = nil
+    }
+    
+    func shakeError() {
+        errorLabel.shake()
     }
 }
 
